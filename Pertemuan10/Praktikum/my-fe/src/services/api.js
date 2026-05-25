@@ -15,6 +15,10 @@ const api = axios.create({
   },
 });
 
+function normalizeError(error, fallback = "Terjadi kesalahan") {
+  return error.response?.data?.message || error.message || fallback;
+}
+
 export async function getMahasiswa() {
   try {
     const response = await api.get("/mahasiswa");
@@ -27,8 +31,42 @@ export async function getMahasiswa() {
 
     return mahasiswa;
   } catch (error) {
-    const message =
-      error.response?.data?.message || error.message || "Gagal mengambil data";
-    throw new Error(message);
+    throw new Error(normalizeError(error, "Gagal mengambil data"));
+  }
+}
+
+export async function getMahasiswaDetail(npm) {
+  try {
+    const response = await api.get(`/mahasiswa/${npm}`);
+    return response.data?.data ?? response.data;
+  } catch (error) {
+    throw new Error(normalizeError(error, "Gagal mengambil detail"));
+  }
+}
+
+export async function createMahasiswa(payload) {
+  try {
+    const response = await api.post("/mahasiswa", payload);
+    return response.data;
+  } catch (error) {
+    throw new Error(normalizeError(error, "Gagal menambah data"));
+  }
+}
+
+export async function updateMahasiswa(npm, payload) {
+  try {
+    const response = await api.put(`/mahasiswa/${npm}`, payload);
+    return response.data;
+  } catch (error) {
+    throw new Error(normalizeError(error, "Gagal memperbarui data"));
+  }
+}
+
+export async function deleteMahasiswa(npm) {
+  try {
+    const response = await api.delete(`/mahasiswa/${npm}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(normalizeError(error, "Gagal menghapus data"));
   }
 }

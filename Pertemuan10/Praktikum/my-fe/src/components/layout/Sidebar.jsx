@@ -8,27 +8,18 @@ const menuItems = [
     label: "Dashboard",
     description: "Ringkasan data kelas",
     icon: "🏠",
+    to: "/dashboard",
   },
   {
     id: "mahasiswa",
     label: "Mahasiswa",
     description: "Daftar data mahasiswa",
     icon: "🎓",
-  },
-  {
-    id: "datadiri",
-    label: "Data Diri",
-    description: "Informasi data diri",
-    icon: "👤",
+    to: "/mahasiswa",
   },
 ];
 
-export default function Sidebar({
-  activePage,
-  isOpen,
-  onClose,
-  onSelectPage,
-}) {
+export default function Sidebar({ isOpen, onClose }) {
   return (
     <>
       {isOpen && (
@@ -41,9 +32,8 @@ export default function Sidebar({
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex h-full w-72 flex-col border-r border-white/10 bg-gradient-to-b from-slate-950 via-slate-900 to-blue-950 p-4 shadow-2xl transition-transform duration-300 md:translate-x-0 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed inset-y-0 left-0 z-40 flex h-full w-72 flex-col border-r border-white/10 bg-gradient-to-b from-slate-950 via-slate-900 to-blue-950 p-4 shadow-2xl transition-transform duration-300 md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="mb-4 flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-300">
@@ -67,8 +57,8 @@ export default function Sidebar({
                 icon={item.icon}
                 label={item.label}
                 description={item.description}
-                isActive={activePage === item.id}
-                onClick={() => onSelectPage(item.id)}
+                to={item.to}
+                onClick={onClose}
               />
             </li>
           ))}
