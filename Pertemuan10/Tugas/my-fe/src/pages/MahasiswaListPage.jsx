@@ -13,20 +13,26 @@ export default function MahasiswaListPage() {
     const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState("");
     const [search, setSearch] = useState("");
+    const [filterProdi, setFilterProdi] = useState("");
+
+    const prodiList = useMemo(() => {
+        const list = mahasiswa.map((mhs) => mhs.prodi).filter(Boolean);
+        return [...new Set(list)];
+    }, [mahasiswa]);
 
     const filteredMahasiswa = useMemo(() => {
         const keyword = search.trim().toLowerCase();
 
-        if (!keyword) return mahasiswa;
-
-        return mahasiswa.filter((mhs) =>
-            Object.values(mhs).some((value) =>
+        return mahasiswa.filter((mhs) => {
+            const matchKeyword = !keyword || Object.values(mhs).some((value) =>
                 String(value ?? "")
                     .toLowerCase()
                     .includes(keyword)
-            )
-        );
-    }, [mahasiswa, search]);
+            );
+            const matchProdi = !filterProdi || mhs.prodi === filterProdi;
+            return matchKeyword && matchProdi;
+        });
+    }, [mahasiswa, search, filterProdi]);
 
     useEffect(() => {
         let isMounted = true;
@@ -68,6 +74,11 @@ export default function MahasiswaListPage() {
         } finally {
             setRefreshing(false);
         }
+    };
+
+    const handleReset = () => {
+        setSearch("");
+        setFilterProdi("");
     };
 
     const handleDelete = async (npm) => {
@@ -112,9 +123,14 @@ export default function MahasiswaListPage() {
                 title="Daftar Mahasiswa"
                 description="Kelola data mahasiswa, tambahkan, edit, dan lihat detail."
                 actions={
-                    <Link to="/mahasiswa/add">
-                        <Button type="button">Tambah Mahasiswa</Button>
-                    </Link>
+                    <div className="flex gap-2">
+                        <Link to="/dashboard">
+                            <Button type="button" variant="secondary">Kembali ke Dashboard</Button>
+                        </Link>
+                        <Link to="/mahasiswa/add">
+                            <Button type="button">Tambah Mahasiswa</Button>
+                        </Link>
+                    </div>
                 }
             />
 
@@ -126,13 +142,35 @@ export default function MahasiswaListPage() {
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <TextInput
-                    type="text"
-                    placeholder="Cari semua data mahasiswa..."
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                    className="sm:max-w-sm"
-                />
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    <TextInput
+                        type="text"
+                        placeholder="Cari semua data mahasiswa..."
+                        value={search}
+                        onChange={(event) => setSearch(event.target.value)}
+                        className="sm:max-w-sm"
+                    />
+                    <select
+                        value={filterProdi}
+                        onChange={(e) => setFilterProdi(e.target.value)}
+                        className="rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 bg-white"
+                    >
+                        <option value="">Semua Prodi</option>
+                        {prodiList.map((prodi) => (
+                            <option key={prodi} value={prodi}>
+                                {prodi}
+                            </option>
+                        ))}
+                    </select>
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={handleReset}
+                        disabled={!search && !filterProdi}
+                    >
+                        Reset
+                    </Button>
+                </div>
 
                 <Button
                     type="button"
