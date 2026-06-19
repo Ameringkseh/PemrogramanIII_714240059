@@ -2,6 +2,7 @@ package main
 
 import (
 	"be_latihan/config"
+	_ "be_latihan/docs"
 	"be_latihan/model"
 	"be_latihan/router"
 	"strings"
@@ -9,8 +10,20 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+
 )
 
+// @title API Praktikum 13 - be_latihan
+// @version 1.0
+// @description Dokumentasi API backend be_latihan menggunakan Golang Fiber, GORM, PostgreSQL, dan JWT.
+// @contact.name Praktikum Pemrograman III
+// @contact.email praktikum@example.com
+// @host 127.0.0.1:3000
+// @BasePath /
+// @schemes http https
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	app := fiber.New()
 	app.Use(cors.New())

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { clearAuthSession, getUser } from "../../services/auth";
+import { clearAuthSession, getToken, getUser } from "../../services/auth";
 import Button from "../atoms/Button";
 
 export default function Header({ pageTitle, onToggleSidebar }) {
@@ -45,6 +45,23 @@ export default function Header({ pageTitle, onToggleSidebar }) {
           <span className="rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 px-3 py-1 text-xs font-medium text-blue-700 md:text-sm">
             {pageTitle}
           </span>
+          <Button
+            type="button"
+            variant="secondary"
+            className="px-3 py-1 text-xs"
+            onClick={() => {
+              Swal.fire({
+                icon: "info",
+                title: "Token JWT",
+                text: getToken() || "Token tidak ditemukan",
+                confirmButtonText: "Tutup",
+                confirmButtonColor: "#3b82f6",
+                width: 600,
+              });
+            }}
+          >
+            Lihat Token
+          </Button>
           <Button
             type="button"
             variant="danger"

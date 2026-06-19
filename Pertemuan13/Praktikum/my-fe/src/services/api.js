@@ -39,6 +39,9 @@ api.interceptors.response.use(
 );
 
 function normalizeError(error, fallback = "Terjadi kesalahan") {
+  if (error.response?.status === 403) {
+    return "Akun Anda bukan admin";
+  }
   return error.response?.data?.message || error.message || fallback;
 }
 
@@ -91,5 +94,14 @@ export async function deleteMahasiswa(npm) {
     return response.data;
   } catch (error) {
     throw new Error(normalizeError(error, "Gagal menghapus data"));
+  }
+}
+
+export async function changePassword(payload) {
+  try {
+    const response = await api.post("/change-password", payload);
+    return response.data;
+  } catch (error) {
+    throw new Error(normalizeError(error, "Gagal mengubah password"));
   }
 }

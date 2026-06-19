@@ -9,6 +9,17 @@ import (
 	"gorm.io/gorm"
 )
 
+// GetAllMahasiswa godoc
+// @Summary Ambil semua data mahasiswa
+// @Description Mengambil seluruh data mahasiswa. Endpoint ini membutuhkan token JWT, tetapi tidak membatasi role admin.
+// @Tags Mahasiswa
+// @Security BearerAuth
+// @Accept json
+// @Produce json
+// @Success 200 {object} model.Response
+// @Failure 401 {object} model.SwaggerResponse401
+// @Failure 500 {object} model.Response
+// @Router /api/mahasiswa/ [get]
 func GetAllMahasiswa(c *fiber.Ctx) error {
 	data, err := repository.GetAllMahasiswa()
 	if err != nil {
@@ -24,6 +35,21 @@ func GetAllMahasiswa(c *fiber.Ctx) error {
 	})
 }
 
+// GetMahasiswaByNPM godoc
+// @Summary Ambil data mahasiswa berdasarkan NPM
+// @Description Mengambil satu data mahasiswa berdasarkan NPM. Endpoint ini hanya dapat diakses oleh role admin.
+// @Tags Mahasiswa
+// @Security BearerAuth
+// @Accept json
+// @Produce json
+// @Param npm path int true "NPM mahasiswa"
+// @Success 200 {object} model.Response
+// @Failure 400 {object} model.Response
+// @Failure 401 {object} model.SwaggerResponse401
+// @Failure 403 {object} model.SwaggerResponse403
+// @Failure 404 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/mahasiswa/{npm} [get]
 func GetMahasiswaByNPM(c *fiber.Ctx) error {
 	npmStr := c.Params("npm")
 	if npmStr == "" {
@@ -62,6 +88,20 @@ func GetMahasiswaByNPM(c *fiber.Ctx) error {
 
 }
 
+// InsertMahasiswa godoc
+// @Summary Tambah data mahasiswa
+// @Description Menambahkan data mahasiswa baru. Endpoint ini hanya dapat diakses oleh role admin.
+// @Tags Mahasiswa
+// @Security BearerAuth
+// @Accept json
+// @Produce json
+// @Param request body model.Mahasiswa true "Payload data mahasiswa"
+// @Success 201 {object} model.Response
+// @Failure 400 {object} model.Response
+// @Failure 401 {object} model.SwaggerResponse401
+// @Failure 403 {object} model.SwaggerResponse403
+// @Failure 500 {object} model.Response
+// @Router /api/mahasiswa/ [post]
 func InsertMahasiswa(c *fiber.Ctx) error {
 	var payload model.Mahasiswa
 	if err := c.BodyParser(&payload); err != nil {
@@ -85,6 +125,22 @@ func InsertMahasiswa(c *fiber.Ctx) error {
 	})
 }
 
+// UpdateMahasiswa godoc
+// @Summary Ubah data mahasiswa
+// @Description Mengubah data mahasiswa berdasarkan NPM. NPM pada body akan dipaksa mengikuti NPM pada URL.
+// @Tags Mahasiswa
+// @Security BearerAuth
+// @Accept json
+// @Produce json
+// @Param npm path int true "NPM mahasiswa"
+// @Param request body model.Mahasiswa true "Payload data mahasiswa"
+// @Success 200 {object} model.Response
+// @Failure 400 {object} model.Response
+// @Failure 401 {object} model.SwaggerResponse401
+// @Failure 403 {object} model.SwaggerResponse403
+// @Failure 404 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/mahasiswa/{npm} [put]
 func UpdateMahasiswa(c *fiber.Ctx) error {
 	npm, err := strconv.ParseInt(c.Params("npm"), 10, 64)
 	if err != nil {
@@ -122,6 +178,20 @@ func UpdateMahasiswa(c *fiber.Ctx) error {
 	})
 }
 
+// DeleteMahasiswa godoc
+// @Summary Hapus data mahasiswa
+// @Description Menghapus data mahasiswa berdasarkan NPM. Endpoint ini hanya dapat diakses oleh role admin.
+// @Tags Mahasiswa
+// @Security BearerAuth
+// @Accept json
+// @Produce json
+// @Param npm path int true "NPM mahasiswa"
+// @Success 200 {object} model.SwaggerResponse200
+// @Failure 400 {object} model.Response
+// @Failure 401 {object} model.SwaggerResponse401
+// @Failure 403 {object} model.SwaggerResponse403
+// @Failure 500 {object} model.Response
+// @Router /api/mahasiswa/{npm} [delete]
 func DeleteMahasiswa(c *fiber.Ctx) error {
 	npm, err := strconv.ParseInt(c.Params("npm"), 10, 64)
 	if err != nil {
