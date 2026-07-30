@@ -1,0 +1,62 @@
+[
+  {
+    "merek": "Kawasaki",
+    "model": "Ninja ZX-25R",
+    "harga": 96000000,
+    "cc": 249,
+    "tahunProduksi": 2025,
+    "tersedia": true,
+    "dealer": "PT Kawasaki Motor Indonesia",
+    "warnaVariant": ["Lime Green", "Metallic Black", "Pearl White"]
+  },
+  {
+    "merek": "Yamaha",
+    "model": "YZF-R15 V4",
+    "harga": 39000000,
+    "cc": 155,
+    "tahunProduksi": 2024,
+    "tersedia": true,
+    "dealer": "PT Yamaha Indonesia Motor Manufacturing",
+    "warnaVariant": ["Racing Blue", "Matte Black", "Red Fluo"]
+  },
+  {
+    "merek": "Honda",
+    "model": "CBR250RR",
+    "harga": 62000000,
+    "cc": 250,
+    "tahunProduksi": 2025,
+    "tersedia": false,
+    "dealer": "PT Astra Honda Motor",
+    "warnaVariant": ["Tricolor", "Matte Black", "Honda Racing Red"]
+  },
+  {
+    "merek": "Suzuki",
+    "model": "GSX-R150",
+    "harga": 32000000,
+    "cc": 147,
+    "tahunProduksi": 2024,
+    "tersedia": true,
+    "dealer": "PT Suzuki Indomobil Sales",
+    "warnaVariant": ["Metallic Triton Blue", "Titan Black", "Stronger Red"]
+  },
+  {
+    "merek": "KTM",
+    "model": "RC 200",
+    "harga": 45000000,
+    "cc": 199,
+    "tahunProduksi": 2025,
+    "tersedia": false,
+    "dealer": "PT Penta Jaya Laju Motor",
+    "warnaVariant": ["Orange", "Black", "White"]
+  },
+  {
+    "merek": "Ducati",
+    "model": "Panigale V2",
+    "harga": 485000000,
+    "cc": 955,
+    "tahunProduksi": 2025,
+    "tersedia": true,
+    "dealer": "PT Supermoto Indonesia",
+    "warnaVariant": ["Ducati Red", "White Rosso", "Dark Stealth"]
+  }
+]
